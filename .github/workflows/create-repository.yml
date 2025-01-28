@@ -5,7 +5,7 @@ on:
 
 jobs:
   create-repo:
-    if: contains(github.event.issue.labels.*.name, 'Repository Request')
+    if: contains(github.event.issue.labels.*.name, 'repository-request')
     runs-on: ubuntu-latest
     steps:
       - name: Check out the repository
