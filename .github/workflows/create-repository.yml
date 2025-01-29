@@ -18,15 +18,21 @@ jobs:
         #   echo "::set-output name=repo_desc::$(jq -r '.issue.body' $GITHUB_EVENT_PATH | grep 'repository_description' | cut -d ':' -f2 | xargs)"
         #   echo "::set-output name=repo_visibility::$(jq -r '.issue.body' $GITHUB_EVENT_PATH | grep 'repository_visibility' | cut -d ':' -f2 | xargs)"
         #   echo ${{github.event.issue.body.repository_name}}
-        run: |
-          issue_body="${{ github.event.issue.body }}"
-          repo_name=$(echo "$issue_body" | jq -r 'map(select(.id == "repository_name"))[0].attributes.value')
-          repo_desc=$(echo "$issue_body" | jq -r 'map(select(.id == "repository_description"))[0].attributes.value')
-          repo_visibility=$(echo "$issue_body" | jq -r 'map(select(.id == "repository_visibility"))[0].attributes.value')
-          echo "::set-output name=repo_name::$repo_name"
-          echo "::set-output name=repo_desc::$repo_desc"
-          echo "::set-output name=repo_visibility::$repo_visibility"
+        # run: |
+        #   issue_body="${{ github.event.issue.body }}"
+        #   repo_name=$(echo "$issue_body" | jq -r 'map(select(.id == "repository_name"))[0].attributes.value')
+        #   repo_desc=$(echo "$issue_body" | jq -r 'map(select(.id == "repository_description"))[0].attributes.value')
+        #   repo_visibility=$(echo "$issue_body" | jq -r 'map(select(.id == "repository_visibility"))[0].attributes.value')
+        #   echo "::set-output name=repo_name::$repo_name"
+        #   echo "::set-output name=repo_desc::$repo_desc"
+        #   echo "::set-output name=repo_visibility::$repo_visibility"
+      - name: Issue Forms Body Parser
+        id: parse
+        uses: zentered/issue-forms-body-parser@v2.0.0
+        with:
+          body: ${{ github.event.issue.body }}
 
+      - run: echo ${{ toJSON(steps.parse.outputs.data) }}
 
       - name: create repo
         uses: f1lander/create-repository-action@v1.0.2
