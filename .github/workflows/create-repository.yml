@@ -32,7 +32,7 @@ jobs:
         with:
           body: ${{ github.event.issue.body }}
       - run: |
-          echo ${{ toJSON(steps.parse.outputs.data.repository-name) }}
+          echo ${{ toJSON(steps.parse.outputs.data) }}
           echo ${{ steps.parse.outputs.data.repository-name.text }}
       - name: create repo
         uses: f1lander/create-repository-action@v1.0.2
