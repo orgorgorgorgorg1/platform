@@ -13,11 +13,14 @@ jobs:
 
       - name: Extract issue details
         id: extract
+        # run: |
+        #   echo "::set-output name=repo_name::$(jq -r '.issue.body' $GITHUB_EVENT_PATH | grep 'repository_name' | cut -d ':' -f2 | xargs)"
+        #   echo "::set-output name=repo_desc::$(jq -r '.issue.body' $GITHUB_EVENT_PATH | grep 'repository_description' | cut -d ':' -f2 | xargs)"
+        #   echo "::set-output name=repo_visibility::$(jq -r '.issue.body' $GITHUB_EVENT_PATH | grep 'repository_visibility' | cut -d ':' -f2 | xargs)"
+        #   echo ${{github.event.issue.body.repository_name}}
         run: |
-          echo "::set-output name=repo_name::$(jq -r '.issue.body' $GITHUB_EVENT_PATH | grep 'repository_name' | cut -d ':' -f2 | xargs)"
-          echo "::set-output name=repo_desc::$(jq -r '.issue.body' $GITHUB_EVENT_PATH | grep 'repository_description' | cut -d ':' -f2 | xargs)"
-          echo "::set-output name=repo_visibility::$(jq -r '.issue.body' $GITHUB_EVENT_PATH | grep 'repository_visibility' | cut -d ':' -f2 | xargs)"
-          echo ${{github.event.issue.body.repository_name}}
+          INPUT_VALUE=$(echo "${{ github.event.issue.body }}" | grep -oP '(?<=repository_name:\s)(.*)')
+          echo "Extracted Value: $INPUT_VALUE"
 
       - name: create repo
         uses: f1lander/create-repository-action@v1.0.2
