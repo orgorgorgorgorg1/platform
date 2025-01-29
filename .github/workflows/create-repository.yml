@@ -27,11 +27,6 @@ jobs:
       - name: create repo
         uses: f1lander/create-repository-action@v1.0.2
         with:
-          name: ${{ steps.parse.outputs.repo_name }}
+          name: ${{ steps.extract-repo-name.outputs.repo_name }}
           org: context.repo.owner
           access-token: ${{ secrets.REPO_TOKEN }}  # Optional        
-
-      - name: Update issue status
-        run: |
-          gh issue comment ${{ github.event.issue.number }} --body "Repository created successfully!"
-          gh issue edit ${{ github.event.issue.number }} --state closed
