@@ -11,49 +11,20 @@ jobs:
       - name: Check out the repository
         uses: actions/checkout@v2
 
-      # - name: Extract issue details
-      #   id: extract
-        # run: |
-        #   echo "::set-output name=repo_name::$(jq -r '.issue.body' $GITHUB_EVENT_PATH | grep 'repository_name' | cut -d ':' -f2 | xargs)"
-        #   echo "::set-output name=repo_desc::$(jq -r '.issue.body' $GITHUB_EVENT_PATH | grep 'repository_description' | cut -d ':' -f2 | xargs)"
-        #   echo "::set-output name=repo_visibility::$(jq -r '.issue.body' $GITHUB_EVENT_PATH | grep 'repository_visibility' | cut -d ':' -f2 | xargs)"
-        #   echo ${{github.event.issue.body.repository_name}}
-        # run: |
-        #   issue_body="${{ github.event.issue.body }}"
-        #   repo_name=$(echo "$issue_body" | jq -r 'map(select(.id == "repository_name"))[0].attributes.value')
-        #   repo_desc=$(echo "$issue_body" | jq -r 'map(select(.id == "repository_description"))[0].attributes.value')
-        #   repo_visibility=$(echo "$issue_body" | jq -r 'map(select(.id == "repository_visibility"))[0].attributes.value')
-        #   echo "::set-output name=repo_name::$repo_name"
-        #   echo "::set-output name=repo_desc::$repo_desc"
-        #   echo "::set-output name=repo_visibility::$repo_visibility"
       - name: Issue Forms Body Parser
         id: parse
         uses: zentered/issue-forms-body-parser@v2.0.0
         with:
           body: ${{ github.event.issue.body }}
       - run: |
-          echo ${{ toJSON(steps.parse.outputs.data) }}
-          echo ${{ steps.parse.outputs.data.repository-name.text }}
+          echo ${{ toJSON(steps.parse.outputs.data) }} jq -r '.["repository-name"].text
+
       - name: create repo
         uses: f1lander/create-repository-action@v1.0.2
         with:
           name: ${{ steps.parse.outputs.repo_name }}
           org: context.repo.owner
           access-token: ${{ secrets.REPO_TOKEN }}  # Optional        
-        # - name: Create repository
-        #   uses: actions/github-script@v6
-        # with:
-        #   script: |
-        #     const repo_name = '${{ steps.extract.outputs.repo_name }}';
-        #     const repo_desc = '${{ steps.extract.outputs.repo_desc }}';
-        #     const repo_visibility = '${{ steps.extract.outputs.repo_visibility }}' === 'Private';
-        #     const response = await github.repos.createInOrg({
-        #       org: context.repo.owner,
-        #       name: repo_name,
-        #       description: repo_desc,
-        #       private: repo_visibility
-        #     });
-        #     console.log(response);
 
       - name: Update issue status
         run: |
