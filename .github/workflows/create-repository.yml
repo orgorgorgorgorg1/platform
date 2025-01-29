@@ -18,20 +18,26 @@ jobs:
           echo "::set-output name=repo_desc::$(jq -r '.issue.body' $GITHUB_EVENT_PATH | grep 'repository_description' | cut -d ':' -f2 | xargs)"
           echo "::set-output name=repo_visibility::$(jq -r '.issue.body' $GITHUB_EVENT_PATH | grep 'repository_visibility' | cut -d ':' -f2 | xargs)"
 
-      - name: Create repository
-        uses: actions/github-script@v6
+      - name: create repo
+        uses: f1lander/create-repository-action@v1.0.2
         with:
-          script: |
-            const repo_name = '${{ steps.extract.outputs.repo_name }}';
-            const repo_desc = '${{ steps.extract.outputs.repo_desc }}';
-            const repo_visibility = '${{ steps.extract.outputs.repo_visibility }}' === 'Private';
-            const response = await github.repos.createInOrg({
-              org: context.repo.owner,
-              name: repo_name,
-              description: repo_desc,
-              private: repo_visibility
-            });
-            console.log(response);
+          name: ${{ steps.extract.outputs.repo_name }}
+          org: context.repo.owner
+          access-token: ${{ secrets.REPO_TOKEN }}  # Optional        
+        # - name: Create repository
+        #   uses: actions/github-script@v6
+        # with:
+        #   script: |
+        #     const repo_name = '${{ steps.extract.outputs.repo_name }}';
+        #     const repo_desc = '${{ steps.extract.outputs.repo_desc }}';
+        #     const repo_visibility = '${{ steps.extract.outputs.repo_visibility }}' === 'Private';
+        #     const response = await github.repos.createInOrg({
+        #       org: context.repo.owner,
+        #       name: repo_name,
+        #       description: repo_desc,
+        #       private: repo_visibility
+        #     });
+        #     console.log(response);
 
       - name: Update issue status
         run: |
