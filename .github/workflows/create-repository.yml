@@ -16,8 +16,12 @@ jobs:
         uses: zentered/issue-forms-body-parser@v2.0.0
         with:
           body: ${{ github.event.issue.body }}
-      - run: |
-          echo ${{ toJSON(steps.parse.outputs.data) }} jq -r '.["repository-name"].text
+
+      - name: Extract repository name
+        id: extract-repo-name
+        run: |
+          repo_name=$(echo '${{ steps.parse.outputs.data }}' | jq -r '.["repository-name"].text')
+          echo "::set-output name=repo_name::$repo_name"          
 
       - name: create repo
         uses: f1lander/create-repository-action@v1.0.2
