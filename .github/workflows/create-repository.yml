@@ -18,6 +18,8 @@ jobs:
           echo "::set-output name=repo_desc::$(jq -r '.issue.body' $GITHUB_EVENT_PATH | grep 'repository_description' | cut -d ':' -f2 | xargs)"
           echo "::set-output name=repo_visibility::$(jq -r '.issue.body' $GITHUB_EVENT_PATH | grep 'repository_visibility' | cut -d ':' -f2 | xargs)"
 
+          echo repo_name: ${{ steps.extract.outputs.repo_name }}
+
       - name: create repo
         uses: f1lander/create-repository-action@v1.0.2
         with:
