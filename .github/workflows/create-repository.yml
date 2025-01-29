@@ -31,13 +31,15 @@ jobs:
         uses: zentered/issue-forms-body-parser@v2.0.0
         with:
           body: ${{ github.event.issue.body }}
-
-      - run: echo ${{ toJSON(steps.parse.outputs.data) }}
-
+      - run: |
+          echo ${{ toJSON(steps.parse.outputs.data) }}
+          echo "::set-output name=repo_name::${{steps.parse.outputs.data.repository_name.text}}"
+          echo "::set-output name=repo_desc::${{steps.parse.outputs.data.repository_description.text}}"
+          echo "::set-output name=repo_visibility::${{steps.parse.outputs.data.repository_visibility.text}}"
       - name: create repo
         uses: f1lander/create-repository-action@v1.0.2
         with:
-          name: ${{ steps.extract.outputs.repo_name }}
+          name: ${{ steps.parse.outputs.repo_name }}
           org: context.repo.owner
           access-token: ${{ secrets.REPO_TOKEN }}  # Optional        
         # - name: Create repository
