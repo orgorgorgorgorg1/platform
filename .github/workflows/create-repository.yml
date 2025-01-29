@@ -33,9 +33,20 @@ jobs:
           body: ${{ github.event.issue.body }}
       - run: |
           echo ${{ toJSON(steps.parse.outputs.data) }}
-          echo "::set-output name=repo_name::${{steps.parse.outputs.data.repository_name.text}}"
-          echo "::set-output name=repo_desc::${{steps.parse.outputs.data.repository_description.text}}"
-          echo "::set-output name=repo_visibility::${{steps.parse.outputs.data.repository_visibility.text}}"
+          echo "::set-output name=repo_name::${{steps.parse.outputs.data.repository-name.text}}"
+          echo "::set-output name=repo_desc::${{steps.parse.outputs.data.repository-description.text}}"
+          echo "::set-output name=repo_visibility::${{steps.parse.outputs.data.repository-visibility.text}}"
+
+      - name: validatereponame
+        run: |
+          echo repo name="${{ steps.parse.outputs.repo_name }}"
+          repo_name="${{ steps.parse.outputs.data.repository_name.text }}"
+          if [[ $repo_name =~ ^[a-zA-Z0-9-]+$ ]]; then
+            echo "Repository name is valid"
+          else
+            echo "Repository name is invalid"
+            exit 1
+          fi
       - name: create repo
         uses: f1lander/create-repository-action@v1.0.2
         with:
