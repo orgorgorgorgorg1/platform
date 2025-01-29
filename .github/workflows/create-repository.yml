@@ -19,8 +19,13 @@ jobs:
         #   echo "::set-output name=repo_visibility::$(jq -r '.issue.body' $GITHUB_EVENT_PATH | grep 'repository_visibility' | cut -d ':' -f2 | xargs)"
         #   echo ${{github.event.issue.body.repository_name}}
         run: |
-          INPUT_VALUE=$(echo "${{ github.event.issue.body }}" | grep -oP '(?<=repository_name:\s)(.*)')
-          echo "Extracted Value: $INPUT_VALUE"
+          repo_name=$(echo "${{ github.event.issue.body }}" | jq -r '.[] | select(.id=="repository_name") | .attributes.value')
+          repo_desc=$(echo "${{ github.event.issue.body }}" | jq -r '.[] | select(.id=="repository_description") | .attributes.value')
+          repo_visibility=$(echo "${{ github.event.issue.body }}" | jq -r '.[] | select(.id=="repository_visibility") | .attributes.value')
+          echo "::set-output name=repo_name::$repo_name"
+          echo "::set-output name=repo_desc::$repo_desc"
+          echo "::set-output name=repo_visibility::$repo_visibility"
+
 
       - name: create repo
         uses: f1lander/create-repository-action@v1.0.2
