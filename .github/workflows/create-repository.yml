@@ -22,7 +22,11 @@ jobs:
         run: |
           repo_name=$(echo '${{ steps.parse.outputs.data }}' | jq -r '.["repository-name"].text')
           echo "::set-output name=repo_name::$repo_name"
-          echo '${{ steps.parse.outputs.data }}' | jq -r '.["repository-name"].text'        
+          echo '${{ steps.parse.outputs.data }}' | jq -r '.["repository-name"].text'
+          echo "::set-output name=repo_names::${{ steps.parse.outputs.data }}' | jq -r '.["repository-name"].text"
+      - name: script
+        id: test
+        run: echo ${{ steps.extract-repo-name.outputs.repo_names }}
 
       - name: create repo
         uses: f1lander/create-repository-action@v1.0.2
