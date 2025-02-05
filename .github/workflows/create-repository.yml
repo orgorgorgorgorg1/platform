@@ -21,7 +21,6 @@ jobs:
         id: extract-repo-name
         run: |
           echo "repo_name=$(echo '${{ steps.parse.outputs.data }}' | jq -r '.["repository-name"].text')" >> $GITHUB_OUTPUT
-          echo "repo_name=(${{ steps.parse.outputs.data }}' | jq -r '.["repository-name"].text')" >> $GITHUB_OUTPUT
           echo '${{ steps.parse.outputs.data }}' | jq -r '.["repository-name"].text'
 
       - name: eco
