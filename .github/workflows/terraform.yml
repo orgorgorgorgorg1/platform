@@ -30,14 +30,14 @@ jobs:
         github_token: ${{ secrets.TF_TOKEN }}
         github_organization: ${{ github.repository_owner }}
       run: |
-        terraform init
+        terraform init 
 
     - name: Terraform Plan
       env:
         github_token: ${{ secrets.TF_TOKEN }}
         github_organization: ${{ github.repository_owner }}
       run: |
-        terraform plan
+        terraform plan -var "github_organization=${{ github.repository_owner }}" -var "github_token=${{ secrets.TF_TOKEN }}" -out=tfplan
         
     # - name: Terraform Apply
     #   if: github.ref == 'refs/heads/main'
