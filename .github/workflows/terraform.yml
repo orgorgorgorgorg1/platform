@@ -23,12 +23,14 @@ jobs:
 
     - name: Terraform Init
       env:
-        GITHUB_TOKEN: ${{ secrets.TF_TOKEN }}
+        github_token: ${{ secrets.TF_TOKEN }}
+        github_organization: ${{ github.repository_owner }}
       run: terraform -chdir=tf init
 
     - name: Terraform Plan
       env:
-        GITHUB_TOKEN: ${{ secrets.TF_TOKEN }}
+        github_token: ${{ secrets.TF_TOKEN }}
+        github_organization: ${{ github.repository_owner }}
       run: terraform -chdir=tf plan
 
     # - name: Terraform Apply
