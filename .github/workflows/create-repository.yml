@@ -23,16 +23,9 @@ jobs:
           echo "repo_name=$(echo '${{ steps.parse.outputs.data }}' | jq -r '.["repository-name"].text')" >> $GITHUB_OUTPUT
           echo '${{ steps.parse.outputs.data }}' | jq -r '.["repository-name"].text'
 
-      - name: eco
-        id: echo
-        run: |
-          echo ${{ steps.extract-repo-name.outputs.repo_name }}
-
       - name: create repo
         uses: f1lander/create-repository-action@v1.0.2
         with:
           name: ${{ steps.extract-repo-name.outputs.repo_name }}
-          org: orgorgorgorgorg1
-          access-token: ${{ secrets.REPO_TOKEN }}  # Optional        
-
-          #echo "repo_name=$(echo '${{ steps.parse.outputs.data }}' | jq -r '.["repository-name"].text')""
+          org: ${{ github.repository_owner }}
+          access-token: ${{ secrets.REPO_TOKEN }}
