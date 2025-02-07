@@ -27,6 +27,7 @@ jobs:
 
     - name: Terraform Init
       env:
+        TF_LOG: "DEBUG"
         github_token: ${{ secrets.TF_TOKEN }}
         github_organization: ${{ github.repository_owner }}
       run: |
@@ -34,6 +35,7 @@ jobs:
 
     - name: Terraform Plan
       env:
+        TF_LOG: "DEBUG"
         github_token: ${{ secrets.TF_TOKEN }}
         github_organization: ${{ github.repository_owner }}
       run: |
