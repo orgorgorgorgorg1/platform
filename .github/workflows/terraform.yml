@@ -1,0 +1,38 @@
+name: Terraform
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Terraform
+      uses: hashicorp/setup-terraform@v3
+      with:
+        terraform_version: 1.10.5
+
+    - name: Terraform Init
+      env:
+        GITHUB_TOKEN: ${{ secrets.TF_TOKEN }}
+      run: terraform -chdir=tf init
+
+    - name: Terraform Plan
+      env:
+        GITHUB_TOKEN: ${{ secrets.TF_TOKEN }}
+      run: terraform -chdir=tf plan
+
+    # - name: Terraform Apply
+    #   if: github.ref == 'refs/heads/main'
+    #   env:
+    #     GITHUB_TOKEN: ${{ secrets.TF_TOKEN }}
+    #   run: terraform apply -auto-approve
