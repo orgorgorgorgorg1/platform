@@ -1,6 +1,6 @@
 provider "github" { 
   token = var.github_token
-  organization = var.github_organization
+  owner = var.github_organization
 }
 
 resource "github_repository" "example-repo" {
