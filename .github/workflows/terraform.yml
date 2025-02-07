@@ -39,11 +39,11 @@ jobs:
         github_token: ${{ secrets.TF_TOKEN }}
         github_organization: ${{ github.repository_owner }}
       run: |
-        terraform plan
+        terraform plan -var "github_organization=${{ github.repository_owner }}" -var "github_token=${{ secrets.TF_TOKEN }}" -out=tfplan
         
-    # - name: Terraform Apply
-    #   if: github.ref == 'refs/heads/main'
-    #   env:
-    #     GITHUB_TOKEN: ${{ secrets.TF_TOKEN }}
-    #   run: terraform apply -auto-approve}
-    #terraform plan -var "github_organization=${{ github.repository_owner }}" -var "github_token=${{ secrets.TF_TOKEN }}" -out=tfplan
+    - name: Terraform Apply
+      if: github.ref == 'refs/heads/main'
+      env:
+        TF_LOG: "DEBUG"
+      run: terraform apply -auto-approve tfplan
+  
