@@ -11,6 +11,10 @@ on:
 jobs:
   terraform:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./tf
 
     steps:
     - name: Checkout code
@@ -26,7 +30,6 @@ jobs:
         github_token: ${{ secrets.TF_TOKEN }}
         github_organization: ${{ github.repository_owner }}
       run: |
-        cd tf
         terraform init
 
     - name: Terraform Plan
@@ -34,7 +37,6 @@ jobs:
         github_token: ${{ secrets.TF_TOKEN }}
         github_organization: ${{ github.repository_owner }}
       run: |
-        cd tf
         terraform plan
         
     # - name: Terraform Apply
