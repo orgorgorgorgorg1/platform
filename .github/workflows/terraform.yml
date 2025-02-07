@@ -25,14 +25,17 @@ jobs:
       env:
         github_token: ${{ secrets.TF_TOKEN }}
         github_organization: ${{ github.repository_owner }}
-      run: terraform -chdir=tf init
+      run: |
+        cd tf
+        terraform init
 
     - name: Terraform Plan
       env:
         github_token: ${{ secrets.TF_TOKEN }}
         github_organization: ${{ github.repository_owner }}
-      run: terraform -chdir=tf plan
-
+      run: |
+        terraform plan
+        
     # - name: Terraform Apply
     #   if: github.ref == 'refs/heads/main'
     #   env:
