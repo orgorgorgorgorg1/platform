@@ -1,8 +1,3 @@
-provider "github" { 
-  token = var.github_token
-  //for rotterdam, probably have to set base_url to the version that supports data locality
-}
-
 resource "github_enterprise_organization" "red" {
   enterprise_id = data.github_enterprise.enterprise.id
   name          = "tyrone-org-red"
