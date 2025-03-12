@@ -18,6 +18,9 @@ jobs:
       uses: hashicorp/setup-terraform@v3
       with:
         terraform_version: 1.10.5
+    
+    - name: test
+      run: ls
 
     - name: Terraform Init
       env:
@@ -25,7 +28,6 @@ jobs:
         github_token: ${{ secrets.TF_TOKEN }}
         github_organization: ${{ github.repository_owner }}
       run: |
-        dir
         terraform init 
 
     - name: Terraform Plan
