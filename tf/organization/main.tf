@@ -47,6 +47,6 @@ resource "github_enterprise_organization" "archive" {
   ]
 }
 
-data "github_enterprise" "example" {
+data "github_enterprise" "enterprise" {
   slug = var.github_enterprise_slug
 }
