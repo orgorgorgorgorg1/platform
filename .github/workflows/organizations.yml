@@ -25,6 +25,7 @@ jobs:
         github_token: ${{ secrets.TF_TOKEN }}
         github_organization: ${{ github.repository_owner }}
       run: |
+        dir
         terraform init 
 
     - name: Terraform Plan
