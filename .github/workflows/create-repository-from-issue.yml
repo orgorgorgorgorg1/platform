@@ -1,0 +1,31 @@
+name: Create Repository
+on:
+  issues:
+    types: [opened]
+#bla
+jobs:
+  create-repo:
+    if: contains(github.event.issue.labels.*.name, 'repository-request')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v2
+
+      - name: Issue Forms Body Parser
+        id: parse
+        uses: zentered/issue-forms-body-parser@v2.0.0
+        with:
+          body: ${{ github.event.issue.body }}
+
+      - name: Extract repository name
+        id: extract-repo-name
+        run: |
+          echo "repo_name=$(echo '${{ steps.parse.outputs.data }}' | jq -r '.["repository-name"].text')" >> $GITHUB_OUTPUT
+          echo '${{ steps.parse.outputs.data }}' | jq -r '.["repository-name"].text'
+
+      - name: create repo
+        uses: f1lander/create-repository-action@v1.0.2
+        with:
+          name: ${{ steps.extract-repo-name.outputs.repo_name }}
+          org: ${{ github.repository_owner }}
+          access-token: ${{ secrets.REPO_TOKEN }}
