@@ -11,15 +11,11 @@ terraform {
     storage_account_name = "state-sa-name"
     container_name       = "tfstate"
     key                  = "tfstate.tfstate"
-    use_oidc = true
-
   }
 }
 
 provider "azurerm" {
   features {}
-  use_oidc = true
-
 }
 
 provider "github" { 
