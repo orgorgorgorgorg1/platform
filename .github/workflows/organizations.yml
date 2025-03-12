@@ -28,7 +28,7 @@ jobs:
     - name: Terraform Init
       env:
         TF_LOG: "DEBUG"
-        github_token: ${{ secrets.TF_TOKEN }}
+        github_token: ${{ secrets.ORG_CREATE_TOKEN }}
         github_enterprise_slug: orgorgorgorgorg1
       run: |
         terraform init 
@@ -36,10 +36,10 @@ jobs:
     - name: Terraform Plan
       env:
         TF_LOG: "DEBUG"
-        github_token: ${{ secrets.TF_TOKEN }}
+        github_token: ${{ secrets.ORG_CREATE_TOKEN }}
         github_enterprise_slug: orgorgorgorgorg1
       run: |
-        terraform plan -var "github_enterprise_slug=orgorgorgorgorg1" -var "github_token=${{ secrets.TF_TOKEN }}" -out=tfplan
+        terraform plan -var "github_enterprise_slug=orgorgorgorgorg1" -var "github_token=${{ secrets.ORG_CREATE_TOKEN }}" -out=tfplan
         
     - name: Terraform Apply
       if: github.ref == 'refs/heads/main'
