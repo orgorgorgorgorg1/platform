@@ -1,3 +1,4 @@
+//pass back-end config during terraform init
 terraform {
   required_providers {
     azurerm = {
@@ -6,8 +7,8 @@ terraform {
     }
   }
   backend "azurerm" {
-    resource_group_name  = var.state_rg
-    storage_account_name = var.state_sa_name
+    resource_group_name  = "state-rg"
+    storage_account_name = "state-sa-name"
     container_name       = "tfstate"
     key                  = "tfstate.tfstate"
     use_oidc             = true
