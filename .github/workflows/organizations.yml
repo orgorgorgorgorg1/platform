@@ -8,7 +8,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: ./tf
+        working-directory: ./tf/organization
 
     steps:
     - name: Checkout code
