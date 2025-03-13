@@ -14,7 +14,6 @@ env:
   ARM_TENANT_ID: "${{ secrets.AZURE_TENANT_ID }}"
   github_token: ${{ secrets.ORG_CREATE_TOKEN }}
   github_enterprise_slug: TyroneTyrone
-  TF_LOG: "DEBUG"  
       
 jobs:
   terraform:
