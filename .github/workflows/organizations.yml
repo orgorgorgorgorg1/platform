@@ -60,10 +60,18 @@ jobs:
         else 
           exit 0
         fi            
-        
+      env:
+        ARM_CLIENT_ID: "${{ secrets.AZURE_CLIENT_ID }}"
+        ARM_SUBSCRIPTION_ID: "${{ secrets.AZURE_SUBSCRIPTION_ID }}"
+        ARM_TENANT_ID: "${{ secrets.AZURE_TENANT_ID }}"
+        ARM_CLIENT_SECRET: "${{ secrets.AZURE_CLIENT_SECRET }}"
     - name: Terraform Apply
       if: github.ref == 'refs/heads/main'
       env:
-        TF_LOG: "DEBUG"
+        ARM_CLIENT_ID: "${{ secrets.AZURE_CLIENT_ID }}"
+        ARM_SUBSCRIPTION_ID: "${{ secrets.AZURE_SUBSCRIPTION_ID }}"
+        ARM_TENANT_ID: "${{ secrets.AZURE_TENANT_ID }}"
+        ARM_CLIENT_SECRET: "${{ secrets.AZURE_CLIENT_SECRET }}"
       run: terraform apply -auto-approve tfplan
+
   
