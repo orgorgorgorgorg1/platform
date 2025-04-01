@@ -1,6 +1,6 @@
 resource "github_enterprise_organization" "red" {
   enterprise_id = data.github_enterprise.enterprise.id
-  name          = "tyrone1-org-red"
+  name          = "tyrone2-org-red"
   display_name  = "tyrone-org-red"
   description   = "Organization created with terraform"
   billing_email = "tvriesde@gmail.com"
@@ -11,7 +11,7 @@ resource "github_enterprise_organization" "red" {
 
 resource "github_enterprise_organization" "green" {
   enterprise_id = data.github_enterprise.enterprise.id
-  name          = "tyrone1-org-green"
+  name          = "tyrone2-org-green"
   display_name  = "tyrone-org-green"
   description   = "Organization created with terraform"
   billing_email = "tvriesde@gmail.com"
@@ -22,7 +22,7 @@ resource "github_enterprise_organization" "green" {
 
 resource "github_enterprise_organization" "sandbox" {
   enterprise_id = data.github_enterprise.enterprise.id
-  name          = "tyrone1-org-archive"
+  name          = "tyrone2-org-archive"
   display_name  = "tyrone99-org-archive"
   description   = "Hoihoi"
   billing_email = "tvriesde@gmail.com"
@@ -33,7 +33,7 @@ resource "github_enterprise_organization" "sandbox" {
 
 resource "github_enterprise_organization" "archive" {
   enterprise_id = data.github_enterprise.enterprise.id
-  name          = "tyrone1-org-sandbox"
+  name          = "tyrone2-org-sandbox"
   display_name  = "tyrone-org-sandbox"
   description   = "Organization created with terraform"
   billing_email = "tvriesde@gmail.com"
