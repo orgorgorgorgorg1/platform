@@ -6,6 +6,5 @@ module "organization" {
 
 module "repositories" {
   source = "./repositories"
-  github_organization = var.github_organization
   github_token = var.github_token
 }
