@@ -3,19 +3,23 @@ provider "github" {
   owner = var.github_organization
 }
 
-resource "github_repository" "example-repo" {
-  name = "example-repo"
-  description = "New Repository"
+# Read and decode the CSV file
+locals {
+  repositories_csv = file("${path.root}/csv/repos.csv")
+  repositories     = csvdecode(local.repositories_csv)
 }
 
-# resource "github_team" "example-team" {
-#   name        = "example-team"
-#   description = "My new team for use with Terraform"
-#   privacy     = "closed"
-# }
+# Create a GitHub repository for each row in the CSV
+resource "github_repository" "repositories" {
+  for_each    = { for repo in local.repositories : repo.name => repo }
+  name        = each.value.name
+  description = each.value.description
+  private     = each.value.private
+}
 
-# resource "github_team_repository" "example-team-repo" {
-#   team_id    = "${github_team.example-team.id}"
-#   repository = "${github_repository.example-repo.name}"
-#   permission = "push"
+resource "github_team_repository" "team_permissions" {
+    for_each    = { for repo in local.repositories : repo.name => repo }
+    team_id    = repo.value.group
+    repository = repo.value.name
+    permission  = each.value.type == "project_admin" ? "admin" : "push"
 # }
