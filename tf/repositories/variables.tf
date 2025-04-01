@@ -3,7 +3,7 @@ variable "github_token" {
   type = string
 }
 
-# variable "github_organization" {
-#   description = "GitHub Organization to manage"
-#   type = string
-# }
+variable "github_organization" {
+  description = "GitHub Organization to manage"
+  type = string
+}

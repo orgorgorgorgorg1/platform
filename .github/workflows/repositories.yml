@@ -14,6 +14,7 @@ env:
   ARM_TENANT_ID: "${{ secrets.AZURE_TENANT_ID }}"
   github_token: ${{ secrets.ORG_CREATE_TOKEN }}
   github_enterprise_slug: TyroneTyrone
+  github_organization: ${{ github.repository_owner}}
       
 jobs:
   terraform:
@@ -49,6 +50,7 @@ jobs:
         terraform plan \
          -var "github_enterprise_slug=TyroneTyrone" \
          -var "github_token=${{ secrets.ORG_CREATE_TOKEN }}" \
+         -var "github_organization=${{ github.repository_owner}}" \
          -out=tfplan || export exitcode=$?
         
         echo "exitcode=$exitcode" >> $GITHUB_OUTPUT
