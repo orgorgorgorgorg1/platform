@@ -7,8 +7,3 @@ variable "github_enterprise_slug" {
   description = "GitHub Organization to manage"
   type = string
 }
-
-variable "github_organization" {
-  description = "GitHub Organization to manage"
-  type = string
-}
