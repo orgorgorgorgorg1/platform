@@ -1,7 +1,20 @@
 name: Terraform
 
-on: []
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
+env:
+  ARM_CLIENT_ID: "${{ secrets.AZURE_CLIENT_ID }}"
+  ARM_SUBSCRIPTION_ID: "${{ secrets.AZURE_SUBSCRIPTION_ID }}"
+  ARM_TENANT_ID: "${{ secrets.AZURE_TENANT_ID }}"
+  github_token: ${{ secrets.ORG_CREATE_TOKEN }}
+  github_enterprise_slug: TyroneTyrone
+      
 jobs:
   terraform:
     runs-on: ubuntu-latest
@@ -20,24 +33,42 @@ jobs:
         terraform_version: 1.10.5
 
     - name: Terraform Init
-      env:
-        TF_LOG: "DEBUG"
-        github_token: ${{ secrets.TF_TOKEN }}
-        github_organization: ${{ github.repository_owner}}
       run: |
-        terraform init 
-
+        terraform init \
+          -backend-config="resource_group_name=${{ secrets.TF_BACKEND_RG }}" \
+          -backend-config="storage_account_name=${{ secrets.TF_BACKEND_SA_NAME }}" \
+          -backend-config="container_name=tfstate" \
+          -backend-config="key=terraform.tfstate" || export exitcode=$?
+      env:
+        ARM_CLIENT_ID: "${{ secrets.AZURE_CLIENT_ID }}"
+        ARM_SUBSCRIPTION_ID: "${{ secrets.AZURE_SUBSCRIPTION_ID }}"
+        ARM_TENANT_ID: "${{ secrets.AZURE_TENANT_ID }}"
+        ARM_CLIENT_SECRET: "${{ secrets.AZURE_CLIENT_SECRET }}"
     - name: Terraform Plan
-      env:
-        TF_LOG: "DEBUG"
-        github_token: ${{ secrets.TF_TOKEN }}
-        github_organization: ${{ github.repository_owner}}
       run: |
-        terraform plan -var "github_organization=${{ github.repository_owner}}" -var "github_token=${{ secrets.TF_TOKEN }}" -out=tfplan
+        terraform plan \
+         -var "github_enterprise_slug=TyroneTyrone" \
+         -var "github_token=${{ secrets.ORG_CREATE_TOKEN }}" \
+         -out=tfplan || export exitcode=$?
         
+        echo "exitcode=$exitcode" >> $GITHUB_OUTPUT
+        
+        if [ $exitcode -eq 1 ]; then
+          echo Terraform Plan Failed!
+          exit 1
+        else 
+          exit 0
+        fi            
+      env:
+        ARM_CLIENT_ID: "${{ secrets.AZURE_CLIENT_ID }}"
+        ARM_SUBSCRIPTION_ID: "${{ secrets.AZURE_SUBSCRIPTION_ID }}"
+        ARM_TENANT_ID: "${{ secrets.AZURE_TENANT_ID }}"
+        ARM_CLIENT_SECRET: "${{ secrets.AZURE_CLIENT_SECRET }}"
     - name: Terraform Apply
       if: github.ref == 'refs/heads/main'
       env:
-        TF_LOG: "DEBUG"
+        ARM_CLIENT_ID: "${{ secrets.AZURE_CLIENT_ID }}"
+        ARM_SUBSCRIPTION_ID: "${{ secrets.AZURE_SUBSCRIPTION_ID }}"
+        ARM_TENANT_ID: "${{ secrets.AZURE_TENANT_ID }}"
+        ARM_CLIENT_SECRET: "${{ secrets.AZURE_CLIENT_SECRET }}"
       run: terraform apply -auto-approve tfplan
-  
