@@ -14,12 +14,12 @@ resource "github_repository" "repositories" {
   for_each    = { for repo in local.repositories : repo.id => repo }
   name        = each.value.Repository
   description = "placeholder"
-  private     = true
+  visibility  = "private"
 }
 
 resource "github_team_repository" "team_permissions" {
     for_each    = { for repo in local.repositories : repo.id => repo }
     team_id    = each.value.Group
     repository = each.value.Repository
-    permission  = each.value.Permission_Level == "project_admin" ? "admin" : "push"
+    permission  = each.value.Permission_Level == "PROJECT_ADMIN" ? "admin" : "push"
  }
