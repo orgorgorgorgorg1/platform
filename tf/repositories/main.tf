@@ -12,7 +12,7 @@ locals {
 # Create a GitHub repository for each row in the CSV
 resource "github_repository" "repositories" {
   for_each    = { for repo in local.repositories : repo.id => repo }
-  name        = each.value.Repostory
+  name        = each.value.Repository
   description = "placeholder"
   private     = true
 }
@@ -20,6 +20,6 @@ resource "github_repository" "repositories" {
 resource "github_team_repository" "team_permissions" {
     for_each    = { for repo in local.repositories : repo.id => repo }
     team_id    = repo.value.Group
-    repository = repo.value.Repostory
+    repository = repo.value.Repository
     permission  = each.value.Permission_Level == "project_admin" ? "admin" : "push"
  }
