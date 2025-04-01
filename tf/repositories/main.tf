@@ -22,4 +22,4 @@ resource "github_team_repository" "team_permissions" {
     team_id    = repo.value.group
     repository = repo.value.name
     permission  = each.value.type == "project_admin" ? "admin" : "push"
-# }
+ }
