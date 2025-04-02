@@ -68,6 +68,7 @@ jobs:
         ARM_CLIENT_SECRET: "${{ secrets.AZURE_CLIENT_SECRET }}"
     - name: Terraform Apply
       if: github.ref == 'refs/heads/main'
+      environment: productie
       env:
         ARM_CLIENT_ID: "${{ secrets.AZURE_CLIENT_ID }}"
         ARM_SUBSCRIPTION_ID: "${{ secrets.AZURE_SUBSCRIPTION_ID }}"
