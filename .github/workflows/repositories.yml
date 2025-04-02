@@ -66,9 +66,12 @@ jobs:
         ARM_SUBSCRIPTION_ID: "${{ secrets.AZURE_SUBSCRIPTION_ID }}"
         ARM_TENANT_ID: "${{ secrets.AZURE_TENANT_ID }}"
         ARM_CLIENT_SECRET: "${{ secrets.AZURE_CLIENT_SECRET }}"
+  deployment:
+    runs-on: ubuntu-latest
+    environment: productie
+    steps:
     - name: Terraform Apply
       if: github.ref == 'refs/heads/main'
-      environment: productie
       env:
         ARM_CLIENT_ID: "${{ secrets.AZURE_CLIENT_ID }}"
         ARM_SUBSCRIPTION_ID: "${{ secrets.AZURE_SUBSCRIPTION_ID }}"
