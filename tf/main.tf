@@ -9,3 +9,9 @@ module "repositories" {
   github_token = var.github_token
   github_organization = var.github_organization
 }
+
+module "teams" {
+  source = "./teams"
+  github_token = var.github_token
+  github_organization = var.github_organization
+}
