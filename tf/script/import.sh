@@ -3,8 +3,8 @@
 # filepath: c:\code\platform\tf\repositories\import.sh
 
 # Set paths to CSV files
-REPOS_CSV="tf/csv/repos.csv"
-TEAMS_CSV="tf/csv/teams.csv"
+REPOS_CSV="csv/repos.csv"
+TEAMS_CSV="csv/teams.csv"
 
 # Check if repos.csv exists
 if [[ ! -f "$REPOS_CSV" ]]; then

@@ -64,6 +64,7 @@ jobs:
   deployment:
     runs-on: ubuntu-latest
     environment: productie
+    needs: terraform
     defaults:
       run:
         shell: bash
