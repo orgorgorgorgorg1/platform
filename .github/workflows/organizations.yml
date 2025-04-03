@@ -1,4 +1,4 @@
-name: Terraform
+name: Organizations
 
 on: [workflow_dispatch]
 
