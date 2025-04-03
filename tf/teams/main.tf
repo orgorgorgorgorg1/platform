@@ -13,5 +13,4 @@ resource "github_team" "teams" {
   for_each    = { for team in local.teams : team.name => team }
   name        = each.value.name
   description = each.value.description
-  ldap_dn     = each.value.idpgroup
 }
