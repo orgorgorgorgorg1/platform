@@ -49,8 +49,8 @@ jobs:
         ARM_CLIENT_SECRET: "${{ secrets.AZURE_CLIENT_SECRET }}"
     - name: Terraform Import
       run: |
-        chmod +x ./tf/script/import.sh # Make the script executable
-        ./tf/script/import.sh       # Execute the script    
+        chmod +x script/import.sh # Make the script executable
+        script/import.sh       # Execute the script    
       env:
         ARM_CLIENT_ID: "${{ secrets.AZURE_CLIENT_ID }}"
         ARM_SUBSCRIPTION_ID: "${{ secrets.AZURE_SUBSCRIPTION_ID }}"
