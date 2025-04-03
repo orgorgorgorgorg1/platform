@@ -2,6 +2,8 @@
 
 # filepath: c:\code\platform\tf\repositories\import.sh
 
+#requires rewrite to read all teams from GitHub API!! and use id's
+
 # Set paths to CSV files
 REPOS_CSV="csv/repos.csv"
 TEAMS_CSV="csv/teams.csv"
