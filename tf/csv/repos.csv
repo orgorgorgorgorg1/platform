@@ -20,4 +20,3 @@ id,Repository,Project,Permission_Level,Group
 19,9,Project,PROJECT_WRITE,bco_contributor
 20,9,Project,PROJECT_ADMIN,bco_admin
 21,10,Project,PROJECT_WRITE,bco_contributor
-22,11,Project,PROJECT_ADMIN,bco_admin
