@@ -11,3 +11,4 @@ LEARNINGS
 
 Terraform Import
 https://spacelift.io/blog/terraform-github
+https://spacelift.io/blog/importing-exisiting-infrastructure-into-terraform
