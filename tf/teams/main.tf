@@ -6,20 +6,12 @@ provider "github" {
 # Read and decode the CSV file
 locals {
   teams_csv = file("${path.root}/csv/teams.csv")
-  repositories     = csvdecode(local.teams_csv)
+  teams     = csvdecode(local.teams_csv)
 }
 
-# Create a GitHub repository for each row in the CSV
-resource "github_repository" "repositories" {
-  for_each    = { for repo in local.repositories : repo.id => repo }
-  name        = each.value.Repository
-  description = "placeholder"
-  visibility  = "private"
+resource "github_team" "teams" {
+  for_each    = { for team in local.teams : team.name => team }
+  name        = each.value.name
+  description = each.value.description
+  ldap_dn     = each.value.idpgroup
 }
-
-resource "github_team_repository" "team_permissions" {
-    for_each    = { for repo in local.repositories : repo.id => repo }
-    team_id    = each.value.Group
-    repository = each.value.Repository
-    permission  = each.value.Permission_Level == "PROJECT_ADMIN" ? "admin" : "push"
- }
