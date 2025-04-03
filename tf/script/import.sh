@@ -27,7 +27,7 @@ while IFS=',' read -r name description private; do
   fi
 
   echo "Importing repository: $name"
-  terraform import github_repository.terraform "$name"
+  terraform import github_repository.repositories "$name"
 done < "$REPOS_CSV"
 
 # Import GitHub teams
@@ -39,7 +39,7 @@ while IFS=',' read -r name description privacy; do
   fi
 
   echo "Importing team: $name"
-  terraform import github_team.core "$name"
+  terraform import github_team.teams "$name"
 done < "$TEAMS_CSV"
 
 echo "Import completed!"
