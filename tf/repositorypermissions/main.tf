@@ -1,6 +1,6 @@
 # Read and decode the CSV file
 locals {
-  repositories_csv = file("${path.root}/csv/repositorypremissions.csv")
+  repositories_csv = file("${path.root}/csv/repositorypermissions.csv")
   repositories     = csvdecode(local.repositories_csv)
 }
 
