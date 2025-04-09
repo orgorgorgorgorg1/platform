@@ -12,6 +12,6 @@ module "teams" {
 
 module "repositorypermissions" {
   source = "./repositorypermissions"
-  # github_token = var.github_token
-  # github_organization = var.github_organization
+  github_token = var.github_token
+  github_organization = var.github_organization
 }
