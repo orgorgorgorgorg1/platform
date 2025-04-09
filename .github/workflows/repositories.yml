@@ -43,10 +43,10 @@ jobs:
           -backend-config="container_name=tfstate" \
           -backend-config="key=terraform.tfstate" || export exitcode=$?
       env:
-        ARM_CLIENT_ID: "${{ secrets.AZURE_CLIENT_ID }}"
-        ARM_SUBSCRIPTION_ID: "${{ secrets.AZURE_SUBSCRIPTION_ID }}"
-        ARM_TENANT_ID: "${{ secrets.AZURE_TENANT_ID }}"
-        ARM_CLIENT_SECRET: "${{ secrets.AZURE_CLIENT_SECRET }}"
+        ARM_CLIENT_ID: "${{ secrets.AZURE_CLIENT_ID2 }}"
+        ARM_SUBSCRIPTION_ID: "${{ secrets.AZURE_SUBSCRIPTION_ID2 }}"
+        ARM_TENANT_ID: "${{ secrets.AZURE_TENANT_ID2 }}"
+        ARM_CLIENT_SECRET: "${{ secrets.AZURE_CLIENT_SECRET2 }}"
     - name: Terraform Plan
       run: |
         terraform plan \
