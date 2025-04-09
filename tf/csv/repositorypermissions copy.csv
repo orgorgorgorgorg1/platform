@@ -1,1 +1,7 @@
 id,Repository,Project,Permission_Level,Group,
+1,1,Project,PROJECT_WRITE,bco_contributor,
+2,1,Project,PROJECT_ADMIN,bco_admin,
+3,1,Project,PROJECT_WRITE,bco_contributor,
+4,1,Project,PROJECT_ADMIN,bco_admin,
+5,2,Project,PROJECT_WRITE,bco_contributor,
+6,2,Project,PROJECT_ADMIN,bco_admin,
