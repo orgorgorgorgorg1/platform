@@ -1,3 +1,4 @@
+
 # Read and decode the CSV file
 locals {
   teams_csv = file("${path.root}/csv/teams.csv")
