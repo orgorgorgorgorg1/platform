@@ -18,7 +18,7 @@ provider "azurerm" {
   features {}
 }
 
-provider "integrations/github" { 
+provider "github" { 
   token = var.github_token
   //for rotterdam, probably have to set base_url to the version that supports data locality
 }
