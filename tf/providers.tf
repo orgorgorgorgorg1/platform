@@ -25,5 +25,6 @@ provider "azurerm" {
 
 provider "github" { 
   token = var.github_token
+  owner = var.github_organization
   //for rotterdam, probably have to set base_url to the version that supports data locality
 }
