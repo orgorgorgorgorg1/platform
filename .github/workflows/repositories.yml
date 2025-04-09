@@ -48,6 +48,10 @@ jobs:
         ARM_TENANT_ID: "${{ secrets.AZURE_TENANT_ID2 }}"
         ARM_CLIENT_SECRET: "${{ secrets.AZURE_CLIENT_SECRET2 }}"
         TF_LOG: DEBUG
+
+    - name: Unlock Plan
+      run: | 
+        terraform force-unlock 9b3539d6-726c-a616-7b41-5c9c3c000014
     - name: Terraform Plan
       run: |
         terraform plan \
