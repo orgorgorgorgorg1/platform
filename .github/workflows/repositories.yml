@@ -47,6 +47,7 @@ jobs:
         ARM_SUBSCRIPTION_ID: "${{ secrets.AZURE_SUBSCRIPTION_ID2 }}"
         ARM_TENANT_ID: "${{ secrets.AZURE_TENANT_ID2 }}"
         ARM_CLIENT_SECRET: "${{ secrets.AZURE_CLIENT_SECRET2 }}"
+        TF_LOG: DEBUG
     - name: Terraform Plan
       run: |
         terraform plan \
