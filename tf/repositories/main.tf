@@ -1,8 +1,3 @@
-provider "github" { 
-  token = var.github_token
-  owner = var.github_organization
-}
-
 # Read and decode the CSV file
 locals {
   repositories_csv = file("${path.root}/csv/repos.csv")
