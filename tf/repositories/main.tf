@@ -12,9 +12,9 @@ resource "github_repository" "repositories" {
   visibility  = "private"
 }
 
-resource "github_team_repository" "team_permissions" {
-    for_each    = { for repo in local.repositories : repo.id => repo }
-    team_id    = each.value.Group
-    repository = each.value.Repository
-    permission  = each.value.Permission_Level == "PROJECT_ADMIN" ? "admin" : "push"
- }
+# resource "github_team_repository" "team_permissions" {
+#     for_each    = { for repo in local.repositories : repo.id => repo }
+#     team_id    = each.value.Group
+#     repository = each.value.Repository
+#     permission  = each.value.Permission_Level == "PROJECT_ADMIN" ? "admin" : "push"
+#  }
