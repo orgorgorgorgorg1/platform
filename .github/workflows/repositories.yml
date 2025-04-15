@@ -49,7 +49,7 @@ jobs:
         ARM_CLIENT_SECRET: "${{ secrets.AZURE_CLIENT_SECRET2 }}"
 
     - name: debug
-      run: echo ${{github}}
+      run: echo ${{toJson(github)}}
     - name: Terraform Plan
       run: |
         terraform plan \
