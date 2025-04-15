@@ -48,6 +48,8 @@ jobs:
         ARM_TENANT_ID: "${{ secrets.AZURE_TENANT_ID2 }}"
         ARM_CLIENT_SECRET: "${{ secrets.AZURE_CLIENT_SECRET2 }}"
 
+    - name: debug
+      run: echo ${{github}}
     - name: Terraform Plan
       run: |
         terraform plan \
