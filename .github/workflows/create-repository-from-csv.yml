@@ -1,0 +1,31 @@
+name: Repository from CSV
+
+# on:
+#   push:
+#     branches:
+#       - main
+#   pull_request:
+#     branches:
+#       - main
+
+on: [workflow_dispatch]
+
+env:
+      
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./tf
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Process Repositories
+      run: node gh-automation/main.js
+      env:
+        GITHUB_TOKEN: ${{ secrets.ORG_CREATE_TOKEN }}
+        GITHUB_ORGANIZATION: ${{ github.repository_owner}}
