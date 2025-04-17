@@ -1,0 +1,3 @@
+name,description,private
+repo1,First repository,true
+repo2,Second repository,false
