@@ -26,7 +26,9 @@ if (!organization) {
 }
 
 // Initialize GitHub API client
-const octokit = new Octokit({ auth: token });
+const octokit = new Octokit({ auth: token,
+  baseUrl: process.env.GITHUB_API_URL,
+ });
 
 async function main() {
   try {
