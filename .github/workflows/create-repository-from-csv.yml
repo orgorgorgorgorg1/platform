@@ -23,9 +23,7 @@ jobs:
       uses: actions/checkout@v2
     
     - name: npm install
-      run: |
-        cd gh-automation
-        npm install
+      run: npm install gh-automation
 
     - name: Process Repositories
       run: node gh-automation/main.js
