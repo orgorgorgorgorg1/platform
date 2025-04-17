@@ -10,9 +10,6 @@ name: Repository from CSV
 
 on: [workflow_dispatch]
 
-defaults:
-  run:
-    working-directory: ./gh-automation
 
 jobs:
   terraform:
@@ -20,7 +17,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: ./tf
+        working-directory: ./gh-automation
 
     steps:
     - name: Checkout code
