@@ -10,6 +10,10 @@ name: Repository from CSV
 
 on: [workflow_dispatch]
 
+defaults:
+  run:
+    working-directory: ./gh-automation
+
 jobs:
   terraform:
     runs-on: ubuntu-latest
@@ -23,10 +27,10 @@ jobs:
       uses: actions/checkout@v2
     
     - name: npm install
-      run: npm install gh-automation
+      run: npm install
 
     - name: Process Repositories
-      run: node gh-automation/main.js
+      run: node main.js
       env:
         GITHUB_TOKEN: ${{ secrets.ORG_CREATE_TOKEN }}
         GITHUB_ORGANIZATION: ${{ github.repository_owner}}
