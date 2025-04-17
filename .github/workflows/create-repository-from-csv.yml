@@ -31,4 +31,4 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.ORG_CREATE_TOKEN }}
         GITHUB_ORGANIZATION: ${{ github.repository_owner}}
-        GITHUB_API_URL: ${{ secrets.GITHUB_BASE_URL }}
+        GITHUB_API_URL: ${{ github.api_url }}
