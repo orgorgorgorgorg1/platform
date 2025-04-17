@@ -21,6 +21,9 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
+    
+    - name: npm install
+      run: npm install
 
     - name: Process Repositories
       run: node gh-automation/main.js
