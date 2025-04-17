@@ -10,8 +10,6 @@ name: Repository from CSV
 
 on: [workflow_dispatch]
 
-env:
-      
 jobs:
   terraform:
     runs-on: ubuntu-latest
