@@ -31,7 +31,7 @@ jobs:
       uses: actions/create-github-app-token@v1
       with:
         app-id: ${{ vars.APP_ID }}
-        private-key: ${{ secrets.GH_APP_SECRET }}      
+        private-key: ${{ secrets.GH_APP_PRIVATEKEY }}      
 
     - name: Process Repositories
       run: node main.js
