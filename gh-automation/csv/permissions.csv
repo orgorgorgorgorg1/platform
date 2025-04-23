@@ -1,5 +1,5 @@
 repository,team,permission
 repo1,bco_admin,admin
 repo1,bco_contributor,pull
-repo1,bco_reader,readonly
+repo1,bco_reader,pull
 repo2,teamx,push
