@@ -26,8 +26,8 @@ jobs:
     - name: npm install
       run: npm install
 
-    use in case of github app
-    steps.generate-token.outputs.token
+    #use in case of github app
+    #steps.generate-token.outputs.token
     - name: Generate a token
       id: generate-token
       uses: actions/create-github-app-token@v1
