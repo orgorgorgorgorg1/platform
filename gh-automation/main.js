@@ -1,7 +1,7 @@
 /**
  * GitHub Repository Automation Script
  * 
- * Reads repository information from a CSV file and creates repositories
+ * Reads repository and team information from CSV files and creates them
  * in a GitHub Enterprise organization if they don't already exist.
  */
 
@@ -26,16 +26,17 @@ if (!organization) {
 }
 
 // Initialize GitHub API client
-const octokit = new Octokit({ auth: token,
+const octokit = new Octokit({
+  auth: token,
   baseUrl: process.env.GITHUB_API_URL,
- });
+});
 
-async function main() {
+async function createRepositories() {
   try {
     // Read and parse CSV file
     const csvFilePath = path.resolve('./csv/repos.csv');
     console.log(`Reading repository data from: ${csvFilePath}`);
-    
+
     if (!fs.existsSync(csvFilePath)) {
       console.error(`Error: CSV file not found at ${csvFilePath}`);
       process.exit(1);
@@ -49,7 +50,7 @@ async function main() {
     // Process each repository
     for (const repo of repositories) {
       const repoName = repo.name || repo.repository;
-      
+
       if (!repoName) {
         console.warn('Warning: Repository name missing, skipping entry');
         continue;
@@ -73,7 +74,7 @@ async function main() {
 
         // Repository doesn't exist, create it
         console.log(`Creating repository '${repoName}' in ${organization}...`);
-        
+
         await octokit.repos.createInOrg({
           org: organization,
           name: repoName,
@@ -97,6 +98,84 @@ async function main() {
     console.error(`Fatal error: ${error.message}`);
     process.exit(1);
   }
+}
+
+async function createTeams() {
+  try {
+    // Read and parse CSV file
+    const csvFilePath = path.resolve('./csv/teams.csv');
+    console.log(`Reading team data from: ${csvFilePath}`);
+
+    if (!fs.existsSync(csvFilePath)) {
+      console.error(`Error: CSV file not found at ${csvFilePath}`);
+      process.exit(1);
+    }
+
+    const csvContent = fs.readFileSync(csvFilePath, 'utf8');
+    const teams = parse(csvContent, { columns: true, skip_empty_lines: true });
+
+    console.log(`Found ${teams.length} teams to process`);
+
+    // Process each team
+    for (const team of teams) {
+      const teamName = team.name;
+      if (!teamName) {
+        console.warn('Warning: Team name missing, skipping entry');
+        continue;
+      }
+
+      if(!team.privacy) {
+        console.warn('Warning: Team privacy missing, skipping entry');
+        continue;
+      }
+
+      if(team.privacy !== 'closed' && team.privacy !== 'secret') {
+        console.warn('Warning: Team privacy must be either "closed" or "secret", skipping entry');
+        continue;
+      }
+
+      try {
+        // Check if team already exists
+        try {
+          await octokit.teams.get({
+            org: organization,
+            team_slug: teamName.toLowerCase().replace(/ /g, '-')
+          });
+          console.log(`✓ Team '${teamName}' already exists in ${organization}`);
+          continue;
+        } catch (error) {
+          // Only proceed if the error is 404 (Not Found)
+          if (error.status !== 404) {
+            throw error;
+          }
+        }
+
+        // Team doesn't exist, create it
+        console.log(`Creating team '${teamName}' in ${organization}...`);
+
+        await octokit.teams.create({
+          org: organization,
+          name: teamName,
+          description: team.description || '',
+          privacy: team.privacy
+        });
+
+        console.log(`✓ Team '${teamName}' created successfully`);
+      } catch (error) {
+        console.error(`✗ Error processing team '${teamName}': ${error.message}`);
+      }
+    }
+
+    console.log('Team processing completed');
+  } catch (error) {
+    console.error(`Fatal error: ${error.message}`);
+    process.exit(1);
+  }
+}
+
+async function main() {
+  await createTeams();
+  await createRepositories();
 }
 
 main();
