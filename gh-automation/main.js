@@ -102,7 +102,7 @@ async function createRepositories() {
 
 async function setRepoPermissions() {
   try {
-    const csvFilePath = path.resolve('./csv/repo-permissions.csv');
+    const csvFilePath = path.resolve('./csv/permissions.csv');
     console.log(`Reading repo permissions data from: ${csvFilePath}`);
 
     if (!fs.existsSync(csvFilePath)) {
