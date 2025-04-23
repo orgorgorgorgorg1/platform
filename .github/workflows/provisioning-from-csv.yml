@@ -29,6 +29,6 @@ jobs:
     - name: Process Repositories
       run: node main.js
       env:
-        GITHUB_TOKEN: ${{ secrets.ORG_CREATE_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GH_APP_SECRET }}
         GITHUB_ORGANIZATION: ${{ github.repository_owner}}
         GITHUB_API_URL: ${{ github.api_url }}
