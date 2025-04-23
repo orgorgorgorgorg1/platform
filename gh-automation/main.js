@@ -100,6 +100,96 @@ async function createRepositories() {
   }
 }
 
+async function setRepoPermissions() {
+  try {
+    const csvFilePath = path.resolve('./csv/repo-permissions.csv');
+    console.log(`Reading repo permissions data from: ${csvFilePath}`);
+
+    if (!fs.existsSync(csvFilePath)) {
+      console.error(`Error: CSV file not found at ${csvFilePath}`);
+      process.exit(1);
+    }
+
+    const csvContent = fs.readFileSync(csvFilePath, 'utf8');
+    const permissions = parse(csvContent, { columns: true, skip_empty_lines: true });
+
+    // Valid GitHub permission types for teams
+    const validPermissions = ['pull', 'push', 'admin', 'maintain', 'triage'];
+
+    for (const record of permissions) {
+      const repoName = record.repository;
+      const teamName = record.team;
+      const permission = record.permission;
+
+      if (!repoName || !teamName || !permission) {
+        console.warn('Warning: Missing repository, team, or permission, skipping entry');
+        continue;
+      }
+
+      // Validate permission type
+      if (!validPermissions.includes(permission)) {
+        console.warn(`Warning: Invalid permission '${permission}' for repo '${repoName}' and team '${teamName}', skipping entry`);
+        continue;
+      }
+
+      // Validate repository exists
+      let repoExists = false;
+      try {
+        await octokit.repos.get({
+          owner: organization,
+          repo: repoName
+        });
+        repoExists = true;
+      } catch (error) {
+        if (error.status === 404) {
+          console.warn(`Warning: Repository '${repoName}' does not exist, skipping permission entry`);
+          continue;
+        } else {
+          throw error;
+        }
+      }
+
+      // Validate team exists
+      let teamSlug = teamName.toLowerCase().replace(/ /g, '-');
+      let teamExists = false;
+      try {
+        await octokit.rest.teams.getByName({
+          org: organization,
+          team_slug: teamSlug
+        });
+        teamExists = true;
+      } catch (error) {
+        if (error.status === 404) {
+          console.warn(`Warning: Team '${teamName}' does not exist, skipping permission entry`);
+          continue;
+        } else {
+          throw error;
+        }
+      }
+
+      // Set permission if both exist
+      try {
+        await octokit.teams.addOrUpdateRepoPermissionsInOrg({
+          org: organization,
+          team_slug: teamSlug,
+          owner: organization,
+          repo: repoName,
+          permission: permission
+        });
+        console.log(`✓ Set '${permission}' permission for team '${teamName}' on repo '${repoName}'`);
+      } catch (error) {
+        console.error(`✗ Error setting permission for team '${teamName}' on repo '${repoName}': ${error.message}`);
+      }
+    }
+
+    console.log('Repository permissions processing completed');
+  } catch (error) {
+    console.error(`Fatal error: ${error.message}`);
+    process.exit(1);
+  }
+}
+
+
 async function createTeams() {
   try {
     // Read and parse CSV file
@@ -176,6 +266,8 @@ async function createTeams() {
 async function main() {
   await createTeams();
   await createRepositories();
+  await setRepoPermissions();
+  console.log('GitHub automation script completed successfully');
 }
 
 main();
