@@ -26,8 +26,7 @@ jobs:
     - name: npm install
       run: npm install
 
-    #use in case of github app
-    #steps.generate-token.outputs.token
+
     - name: Generate a token
       id: generate-token
       uses: actions/create-github-app-token@v1
@@ -39,7 +38,6 @@ jobs:
     - name: Process Repositories
       run: node main.js
       env:
-        # GITHUB_TOKEN: ${{ secrets.ORG_CREATE_TOKEN }}
         GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
         GITHUB_ORGANIZATION: ${{ github.repository_owner}}
         GITHUB_API_URL: ${{ github.api_url }}
