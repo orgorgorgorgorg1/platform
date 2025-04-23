@@ -66,6 +66,7 @@ async function createRepositories() {
           console.log(`✓ Repository '${repoName}' already exists in ${organization}`);
           continue;
         } catch (error) {
+          console.log("errors found", error.status);
           // Only proceed if the error is 404 (Not Found)
           if (error.status !== 404) {
             throw error;
