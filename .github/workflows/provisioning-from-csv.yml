@@ -1,4 +1,4 @@
-name: Repository from CSV
+name: GitHub Provisioning from CSV
 
 # on:
 #   push:

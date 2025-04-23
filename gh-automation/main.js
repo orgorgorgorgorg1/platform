@@ -137,7 +137,7 @@ async function createTeams() {
       try {
         // Check if team already exists
         try {
-          await octokit.teams.get({
+          await octokit.rest.teams.getByName({
             org: organization,
             team_slug: teamName.toLowerCase().replace(/ /g, '-')
           });
