@@ -1,14 +1,14 @@
-Instructions on configuring Terraform state file
-https://github.com/Azure-Samples/terraform-github-actions
+# How to Use This Repo
 
-a solution without sercrets
-https://colinsalmcorner.com/using-oidc-with-terraform-in-github-actions/
+This repository contains three approaches to provisioning GitHub resources:
 
+- **`./gh-automation`**: Create resources using a Node.js script.
+- **`./tf`**: Create resources using a Terraform setup (requires an Azure Storage Account for the state file).
 
-LEARNINGS
-- Organization creation en repository creation uit elkaar halen. Aparte automation
-- Organization creation kan via Terraform, hoeft niet vanwege lage aantal wijzigingen
+For both solutions, make sure to configure a PAT token or GitHub App with appropriate permissions.
 
-Terraform Import
-https://spacelift.io/blog/terraform-github
-https://spacelift.io/blog/importing-exisiting-infrastructure-into-terraform
+---
+
+## Instructions on Configuring the Terraform State File
+
+See: [Azure-Samples/terraform-github-actions](https://github.com/Azure-Samples/terraform-github-actions)
