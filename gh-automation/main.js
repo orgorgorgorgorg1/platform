@@ -289,7 +289,6 @@ async function createTeams() {
           console.warn('Warning: Missing idpGroupId, idpGroupName, or idpGroupDescription, skipping idpGroupMembership');
         }
         
-
         console.log(`✓ Team '${teamName}' created successfully`);
       } catch (error) {
         console.error(`✗ Error processing team '${teamName}': ${error.message}`);

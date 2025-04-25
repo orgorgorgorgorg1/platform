@@ -38,6 +38,7 @@ jobs:
     - name: Process Repositories
       run: node main.js
       env:
-        GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
+        #GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
+        GITHUB_TOKEN: ${{ secrets.ORG_CREATE_TOKEN }}
         GITHUB_ORGANIZATION: ${{ github.repository_owner}}
         GITHUB_API_URL: ${{ github.api_url }}
