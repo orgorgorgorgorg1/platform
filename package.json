@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@octokit/plugin-throttling": "^10.0.0"
+  }
+}
