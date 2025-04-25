@@ -9,6 +9,7 @@ import fs from 'fs';
 import path from 'path';
 import { parse } from 'csv-parse/sync'; // Using sync for simplicity
 import { Octokit } from '@octokit/rest';
+import { throttling } from '@octokit/plugin-throttling';
 
 // Get GitHub token from environment (provided by GitHub workflow)
 const token = process.env.GITHUB_TOKEN;
@@ -29,6 +30,23 @@ if (!organization) {
 const octokit = new Octokit({
   auth: token,
   baseUrl: process.env.GITHUB_API_URL,
+  onRateLimit: (retryAfter, options, octokit, retryCount) => {
+    octokit.log.warn(
+      `Request quota exhausted for request ${options.method} ${options.url}`,
+    );
+
+    if (retryCount < 1) {
+      // only retries once
+      octokit.log.info(`Retrying after ${retryAfter} seconds!`);
+      return true;
+    }
+  },
+  onSecondaryRateLimit: (retryAfter, options, octokit) => {
+    // does not retry, only logs a warning
+    octokit.log.warn(
+      `SecondaryRateLimit detected for request ${options.method} ${options.url}`,
+    );
+  }
 });
 
 async function createRepositories() {

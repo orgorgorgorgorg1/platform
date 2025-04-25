@@ -32,7 +32,7 @@ jobs:
       uses: actions/create-github-app-token@v1
       with:
         app-id: ${{ vars.APP_ID }}
-        private-key: ${{ secrets.GH_APP_PRIVATEKEY }}      
+        private-key: ${{ secrets.GH_APP_PRIVATEKEY }}
         owner: ${{ github.repository_owner }}
 
     - name: Process Repositories

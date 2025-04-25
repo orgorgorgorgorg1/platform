@@ -13,3 +13,6 @@ For both solutions, make sure to configure a PAT token or GitHub App with approp
 ## Instructions on Configuring the Terraform State File
 
 See: [Azure-Samples/terraform-github-actions](https://github.com/Azure-Samples/terraform-github-actions)
+
+
+https://octokit.github.io/rest.js/v18/#teams
