@@ -1,5 +1,5 @@
 name,description,privacy,idpGroupId,idpGroupName,idpGroupDescription
-bco_admin,bco_admin,closed,id,name,description
-bco_contributor,bco_contributor,closed,closed,id,name,description
-bco_reader,bco_reader,closed,closed,id,name,description
-teamx,teamx,closed,closed,id,name,description
+bco_admin,bco_admin,closed,,name,description
+bco_contributor,bco_contributor,closed,closed,,name,description
+bco_reader,bco_reader,closed,closed,,name,description
+teamx,teamx,closed,closed,,name,description

@@ -251,6 +251,27 @@ async function createTeams() {
           privacy: team.privacy
         });
 
+        //set group idp connection in case all values are provided
+        if(team.idpGroupId && team.idpGroupName && team.idpGroupDescription) {
+          await octokit.request(`PATCH /orgs/${organization}/teams/${teamName}/team-sync/group-mappings`, {
+            org: organization,
+            team_slug: teamName,
+            groups: [
+              {
+                group_id: team.idpGroupId,
+                group_name: team.idpGroupName,
+                group_description: team.idpGroupDescription
+              }
+            ],
+            headers: {
+              'X-GitHub-Api-Version': '2022-11-28'
+            }
+          })
+        } else {
+          console.warn('Warning: Missing idpGroupId, idpGroupName, or idpGroupDescription, skipping idpGroupMembership');
+        }
+        
+
         console.log(`✓ Team '${teamName}' created successfully`);
       } catch (error) {
         console.error(`✗ Error processing team '${teamName}': ${error.message}`);
