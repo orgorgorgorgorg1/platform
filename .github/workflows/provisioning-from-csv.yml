@@ -12,7 +12,7 @@ on: [workflow_dispatch]
 
 
 jobs:
-  terraform:
+  provision:
     runs-on: ubuntu-latest
     defaults:
       run:
