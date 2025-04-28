@@ -272,7 +272,6 @@ async function createTeams() {
         //set group idp connection in case all values are provided
         if(team.idpGroupId && team.idpGroupName && team.idpGroupDescription) {
           const url = "PATCH /orgs/{org}/teams/{team_slug}/team-sync/group-mappings";
-          console.log('debug url', url);
           await octokit.request(url, {
             org: organization,
             team_slug: teamName,
