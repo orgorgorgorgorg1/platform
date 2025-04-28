@@ -271,7 +271,9 @@ async function createTeams() {
 
         //set group idp connection in case all values are provided
         if(team.idpGroupId && team.idpGroupName && team.idpGroupDescription) {
-          await octokit.request(`PATCH /orgs/${organization}/teams/${teamName}/team-sync/group-mappings`, {
+          const url = `PATCH /orgs/${organization}/teams/${teamName}/team-sync/group-mappings`;
+          console.log('debug url', url);
+          await octokit.request(url, {
             org: organization,
             team_slug: teamName,
             groups: [
@@ -285,6 +287,7 @@ async function createTeams() {
               'X-GitHub-Api-Version': '2022-11-28'
             }
           })
+
         } else {
           console.warn('Warning: Missing idpGroupId, idpGroupName, or idpGroupDescription, skipping idpGroupMembership');
         }
