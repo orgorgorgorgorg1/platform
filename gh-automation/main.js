@@ -11,7 +11,7 @@ import { parse } from 'csv-parse/sync'; // Using sync for simplicity
 import { Octokit } from '@octokit/rest';
 import { throttling } from '@octokit/plugin-throttling';
 
-// Get GitHub token from environment (provided by GitHub workflow)
+// Get GitHub token from environment (provided by GitHub workflow) //
 const token = process.env.GITHUB_TOKEN;
 
 if (!token) {
