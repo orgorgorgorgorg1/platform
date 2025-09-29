@@ -3,3 +3,4 @@ repo1,bco_admin,admin
 repo1,bco_contributor,pull
 repo1,bco_reader,pull
 repo2,teamx,admin
+repo2,teamy,pull
